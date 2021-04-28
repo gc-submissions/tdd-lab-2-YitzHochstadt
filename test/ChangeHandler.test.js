@@ -37,6 +37,24 @@ describe("ChangeHandler", function() {
     change.insertCoin("quarter");
     expect(change.cashTendered).toEqual(75);
   });
-
+  test("too much", () => {
+    const change = new ChangeHandler(45);
+    change.insertCoin("quarter");
+    change.insertCoin("quarter");
+    expect(change.isPaymentSufficient()).toBe(true);
+  });
+  test("not enough", () => {
+    const change = new ChangeHandler(55);
+    change.insertCoin("quarter");
+    change.insertCoin("quarter");
+    expect(change.isPaymentSufficient()).toBe(false);
+  });
+  test("just right", () => {
+    const change = new ChangeHandler(60);
+    change.insertCoin("quarter");
+    change.insertCoin("quarter");
+    change.insertCoin("dime");
+    expect(change.isPaymentSufficient()).toBe(true);
+  });
 
 });
