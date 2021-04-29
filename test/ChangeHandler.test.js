@@ -56,5 +56,55 @@ describe("ChangeHandler", function() {
     change.insertCoin("dime");
     expect(change.isPaymentSufficient()).toBe(true);
   });
-
+  test("32 change", () => {
+    const change = new ChangeHandler(18);
+    change.insertCoin("quarter");
+    change.insertCoin("quarter");
+    expect(change.giveChange()).toEqual({
+      quarters: 1,
+      dimes: 0,
+      nickels: 1,
+      pennies: 2
+    });
+  });
+  test("10 change", () => {
+    const change = new ChangeHandler(40);
+    change.insertCoin("quarter");
+    change.insertCoin("quarter");
+    expect(change.giveChange()).toEqual({
+      quarters: 0,
+      dimes: 1,
+      nickels: 0,
+      pennies: 0
+    });
+  });
+  test("27 change", () => {
+    const change = new ChangeHandler(33);
+    change.insertCoin("quarter");
+    change.insertCoin("quarter");
+    change.insertCoin("dime");
+    expect(change.giveChange()).toEqual({
+      quarters: 1,
+      dimes: 0,
+      nickels: 0,
+      pennies: 2
+    });
+  });
+  test("68 change", () => {
+    const change = new ChangeHandler(25);
+    change.insertCoin("quarter");
+    change.insertCoin("quarter");
+    change.insertCoin("quarter");
+    change.insertCoin("dime");
+    change.insertCoin("nickel");
+    change.insertCoin("penny");
+    change.insertCoin("penny");
+    change.insertCoin("penny");
+    expect(change.giveChange()).toEqual({
+      quarters: 2,
+      dimes: 1,
+      nickels: 1,
+      pennies: 3
+    });
+  });
 });

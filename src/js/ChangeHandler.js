@@ -38,13 +38,29 @@ class ChangeHandler {
     }
 
     giveChange() {
-        // TODO return the correct change in the following format...
-        return {
-            quarters: 0,
-            dimes: 0,
-            nickels: 0,
-            pennies: 0
+      let change = {
+        quarters: 0,
+        dimes: 0,
+        nickels: 0,
+        pennies: 0
+      }
+        let changeDue = this.cashTendered - this.amountDue;
+        while (this.isPaymentSufficient() === true && changeDue > 0){
+          if (changeDue >= 25){
+            change.quarters++;
+            changeDue -= 25;
+          } else if (changeDue >= 10){
+            change.dimes++;
+            changeDue -= 10;
+          } else if (changeDue >= 5){
+            change.nickels++;
+            changeDue -= 5;
+          } else if (changeDue >= 1){
+            change.pennies++;
+            changeDue -= 1;
+          }
         }
+        return change;
     }
 }
 
